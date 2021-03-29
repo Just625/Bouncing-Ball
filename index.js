@@ -14,6 +14,32 @@ class Score{
     }
 }
 
+class Lives{
+    x;
+    y;
+    width;
+    height;
+    text;
+    constructor(x,y,width,height,text){
+        this.x=x;
+        this.y=y;
+        this.width =width;
+        this.height=height;
+        this.text=text;
+    }
+    draw(){
+        let img = new Image()
+        img.src='img/heart-icon.png';
+        img.onload=function(){
+            ctx.drawImage(img,canvas.width-120,10,30,30);
+        }
+        ctx.drawImage(img,this.x,this.y,this.width,this.height);
+        ctx.fillStyle="white";
+        ctx.font="30px Arial";
+        ctx.fillText(this.text,this.x+35,this.y+25);
+    }
+}
+
 class Brick{
     width;
     height;
@@ -86,16 +112,15 @@ class Ball{
                 }
             }
         }
-        if(this.y+this.radius>canvas.height+this.radius*2){
+        if(this.y+this.radius>canvas.height){
             lives--;
-            live.text = `Lives: ${lives}`;
+            live.text = `x ${lives}`;
             if(lives<=0){
-                menuSound.pause();
-                loseGameSound.play();
                 cancelAnimationFrame(id);
+                menuSound.muted = true;
+                loseGameSound.play();
                 ctx.clearRect(0,0,canvas.width,canvas.height);
                 ctx.drawImage(img,0,0,canvas.width,canvas.height);
-                // alert("Game ended");
             } else{
                 lifeLostSound.play();
                 bar.x = canvas.width/2-200;
@@ -114,7 +139,7 @@ class Ball{
             }
         }
         if(count==brickRow*brickCol){
-            menuSound.pause();
+            menuSound.muted = true;
             winGameSound.play();
             alert("Victory!!!");
             cancelAnimationFrame(id);
@@ -198,14 +223,14 @@ canvas.height = innerHeight-30;
 let ctx = canvas.getContext("2d");
 
 let img = new Image();
-img.src='game_over.png';
+img.src='img/game_over.png';
 
 let firstScore = 0;
 let lives = 3;
-let bar = new Bar(canvas.width/2-200,canvas.height-20,200,20,15);
-let ball = new Ball(bar.x+(bar.width/2),bar.y-10,10,3,3);
-let score = new Score(20,30,`Score: ${firstScore}`);
-let live = new Score(canvas.width-120,30,`Lives: ${lives}`);
+let bar = new Bar((canvas.width-200)/2,canvas.height-20,200,20,15);
+let ball = new Ball(bar.x+(bar.width/2),bar.y-10,10,4,3);
+let score = new Score(5,30,`Score: ${firstScore}`);
+let live = new Lives(canvas.width-120,10,30,30,`x ${lives}`);
 bar.draw();
 ball.draw();
 score.draw();
@@ -231,6 +256,23 @@ for(let i = 0; i<brickRow;i++){
     yBrick+=brickHeight+brickPaddingBtm;
 }
 drawBrick();
+let imgBtn = document.getElementById("imgBtn");
+imgBtn.addEventListener("click",function(){
+    let imgSrc = imgBtn.getAttribute("src");
+    if(imgSrc=='img/SOUND_ON.png'){
+        imgBtn.setAttribute("src",'img/SOUND_OFF.png');
+    }else{
+        imgBtn.setAttribute("src",'img/SOUND_ON.png');
+        }
+    wallHitSound.muted ? wallHitSound.muted=false : wallHitSound.muted= true;
+    paddleHitSound.muted ? paddleHitSound.muted=false : paddleHitSound.muted= true;
+    loseGameSound.muted ? loseGameSound.muted=false : loseGameSound.muted= true;
+    lifeLostSound.muted ? lifeLostSound.muted=false : lifeLostSound.muted= true;
+    winGameSound.muted ? winGameSound.muted=false : winGameSound.muted= true;
+    brickHitSound.muted ? brickHitSound.muted=false : brickHitSound.muted= true;
+    menuSound.muted ? menuSound.muted=false : menuSound.muted= true;
+    }
+)
 
 let resetBtn = document.getElementById("resetBtn");
 resetBtn.addEventListener("click",function(){
@@ -245,15 +287,12 @@ instructionBtn.addEventListener("click",function(){
         rules.style.visibility ="hidden";
     }
 })
-// addEventListener("click",function(){
-//     menuSound.play();
-// });
 
 let startBtn = document.getElementById("startBtn");
 startBtn.addEventListener("click",function(){
+    startBtn.disabled = true;
     menuSound.play();
     menuSound.loop=true;
-    startBtn.disabled = true;
         addEventListener("keydown",function(event){
             switch(event.keyCode){
                 case 37:
