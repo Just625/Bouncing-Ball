@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Breakout game</title>
+    <style>
+        body{
+            margin:0;
+            overflow:hidden;
+            background-color:#326773;
+        }
+        #leftContent{
+            border: 4px solid #89929F;
+            display:inline-block;
+            background:#203D40;
+            margin-top:10px;
+            position:relative;
+            margin-left:5px;
+        }
+        #rightContent{
+            margin-top:10px;
+            display: inline-block;
+            border: 4px solid #89929F;
+            width: 22%;
+            background:#203D40;
+            position: relative;
+            top: -130px;
+            margin-left: 7px;
+            height:597px;
+        }
+        .btn{
+            display: block;
+            color:white;
+            cursor:pointer;
+            border-radius:4px ;
+            width:240px;
+            margin-left: 30px;
+            text-align:center;
+            height:50px;
+            font-size: 30px;
+            border-color:black;
+        }
+        .btn:hover{
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        #startBtn{
+            background-color:green;
+            margin-bottom:120px;
+        }
+        #resetBtn{
+            background-color:#A62F14;
+        }
+        #instructionBtn{
+            margin-top:50px;
+            background-color:gray;
+            margin-bottom:5px;
+        }
+        #rules{
+            color:white;
+            font-size: 15px;
+            margin-top:30px;
+            text-align: center;
+            margin-bottom:50px;
+        }
+    </style>
+</head>
+<body >
+    <div id="leftContent">
+        <canvas id="myCanvas" ></canvas>
+    </div>
+    <div id="rightContent">
+        <h2 style="color:white; text-align: center;" >Breakout game!!</h2>
+        <button id="instructionBtn" class="btn">Instruction</button>
+        <div id="rules" style="visibility: hidden">Use left, right arrow buttons to move the bar </br>
+            Don't let the ball touch the bottom of the screen
+        </div>
+        <button id="startBtn" class="btn">Start</button>
+        <button id="resetBtn" class="btn">Reset</button>
+    </div>
+</body>
+</html>
+<script src="index.js"></script>
