@@ -109,6 +109,14 @@ class Ball{
                     b.height = 0;
                     firstScore++;
                     score.text = `Score: ${firstScore}`;
+                    if(firstScore%5==0&&firstScore>0){
+                        if(this.dx<0){
+                            this.dx-=1;
+                        }else{
+                            this.dx+=1;
+                        }
+                    }
+
                 }
             }
         }
@@ -119,8 +127,7 @@ class Ball{
                 cancelAnimationFrame(id);
                 menuSound.muted = true;
                 loseGameSound.play();
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                ctx.drawImage(img,0,0,canvas.width,canvas.height);
+                ctx.drawImage(loseImg,0,0,canvas.width,canvas.height);
             } else{
                 lifeLostSound.play();
                 bar.x = canvas.width/2-200;
@@ -139,10 +146,10 @@ class Ball{
             }
         }
         if(count==brickRow*brickCol){
+            cancelAnimationFrame(id);
             menuSound.muted = true;
             winGameSound.play();
-            alert("Victory!!!");
-            cancelAnimationFrame(id);
+            ctx.drawImage(winImg,0,150,canvas.width,canvas.height*0.6);
         }
     }
 }
@@ -222,12 +229,14 @@ canvas.width = innerWidth*3/4;
 canvas.height = innerHeight-30;
 let ctx = canvas.getContext("2d");
 
-let img = new Image();
-img.src='img/game_over.png';
+let loseImg = new Image();
+loseImg.src='img/game_over.png';
+let winImg = new Image();
+winImg.src="img/winImg.jpg";
 
 let firstScore = 0;
 let lives = 3;
-let bar = new Bar((canvas.width-200)/2,canvas.height-20,200,20,15);
+let bar = new Bar((canvas.width-200)/2,canvas.height-20,200,20,18);
 let ball = new Ball(bar.x+(bar.width/2),bar.y-10,10,4,3);
 let score = new Score(5,30,`Score: ${firstScore}`);
 let live = new Lives(canvas.width-120,10,30,30,`x ${lives}`);
@@ -304,6 +313,4 @@ startBtn.addEventListener("click",function(){
             }
         })
         animate();
-})
-
-
+});
