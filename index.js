@@ -127,7 +127,7 @@ class Ball{
                 cancelAnimationFrame(id);
                 menuSound.muted = true;
                 loseGameSound.play();
-                ctx.drawImage(loseImg,0,0,canvas.width,canvas.height);
+                ctx.drawImage(loseImg,0,50,canvas.width,canvas.height);
             } else{
                 lifeLostSound.play();
                 bar.x = canvas.width/2-200;
@@ -237,7 +237,7 @@ winImg.src="img/winImg.png";
 let firstScore = 0;
 let lives = 3;
 let bar = new Bar((canvas.width-200)/2,canvas.height-20,200,20,18);
-let ball = new Ball(bar.x+(bar.width/2),bar.y-10,10,4,3);
+let ball = new Ball(bar.x+(bar.width/2),bar.y-10,10,3,4);
 let score = new Score(5,30,`Score: ${firstScore}`);
 let live = new Lives(canvas.width-120,10,30,30,`x ${lives}`);
 bar.draw();
@@ -251,7 +251,7 @@ let brickPaddingRight = 50;
 let brickHeight = 20;
 let brickPaddingBtm = 20;
 let yBrick =50;
-let brickRow = 3;
+let brickRow = 6;
 let brickCol =8;
 for(let i = 0; i<brickRow;i++){
     let row = [];
