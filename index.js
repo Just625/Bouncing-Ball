@@ -111,9 +111,9 @@ class Ball{
                     score.text = `Score: ${firstScore}`;
                     if(firstScore%5==0&&firstScore>0){
                         if(this.dx<0){
-                            this.dx-=1;
+                            this.dx-=2;
                         }else{
-                            this.dx+=1;
+                            this.dx+=2;
                         }
                     }
 
@@ -149,7 +149,7 @@ class Ball{
             cancelAnimationFrame(id);
             menuSound.muted = true;
             winGameSound.play();
-            ctx.drawImage(winImg,0,150,canvas.width,canvas.height*0.6);
+            ctx.drawImage(winImg,250,100,canvas.width*0.5,canvas.height*0.6);
         }
     }
 }
@@ -232,7 +232,7 @@ let ctx = canvas.getContext("2d");
 let loseImg = new Image();
 loseImg.src='img/game_over.png';
 let winImg = new Image();
-winImg.src="img/winImg.jpg";
+winImg.src="img/winImg.png";
 
 let firstScore = 0;
 let lives = 3;
